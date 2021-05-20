@@ -9,8 +9,8 @@ from registry.user.models import User
 class LoginForm(FlaskForm):
     """Login form."""
 
-    email = StringField("Email", validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
+    email = StringField("E-mail", validators=[DataRequired()])
+    password = PasswordField("Heslo", validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
         """Create instance."""
@@ -25,14 +25,14 @@ class LoginForm(FlaskForm):
 
         self.user = User.query.filter_by(email=self.email.data).first()
         if not self.user:
-            self.email.errors.append("Unknown email")
+            self.email.errors.append("Neznámý e-mail")
             return False
 
         if not self.user.check_password(self.password.data):
-            self.password.errors.append("Invalid password")
+            self.password.errors.append("Špatné heslo")
             return False
 
         if not self.user.active:
-            self.email.errors.append("User not activated")
+            self.email.errors.append("Účet není aktivován")
             return False
         return True

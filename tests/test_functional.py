@@ -184,7 +184,7 @@ class TestImport:
         form.fields["donation_center_id"][0].options.append(("666", False, "malicious"))
         form.fields["donation_center_id"][0].select(666)
         res = form.submit()
-        assert "Odběrné místo - Not a valid choice" in res
+        assert "Not a valid choice (pole: odběrné místo)" in res
 
         assert Record.query.count() == existing_records
         assert Batch.query.count() == existing_batches
